@@ -13,12 +13,16 @@ import java.awt.event.ItemListener;
 
 //hier is de start van de class, waarin we alles callen
 public class FirePopUp extends JFrame {
-    private JTextField ammoField;       //we gebruiken namelijk het Swing textfield
-    private JButton fireButton;         //we gebruiken namelijk de  Swing button
-    private int Ammo = 20;              //hier callen we de integer om de ammo bij te houden
+    private JTextField ammoField;
+    private JButton fireButton;
+    private JRadioButton manualSelector;
+    private JRadioButton semiautoSelector;
+    private JRadioButton fullautoSelector;
+    private int Ammo = 20;
 
     //hier is de werkelijke constructor van de GUI
-    public FirePopUp() extends JFrame implements ItemListener {
+    public FirePopUp() extends JFrame implements ItemListener implements ActionListener {
+
         Container cp = getContentPane();
         cp.setLayout(new FlowLayout());
 
@@ -29,19 +33,16 @@ public class FirePopUp extends JFrame {
         cp.add(ammoField);
 
         //the firerate selector
-        ButtonGroup fireRateGroup = new ButtonGroup();
-        JRadioButton rb1 = new JRadioButton("Manual", true);
-        JRadioButton rb2 = new JRadioButton("Semi-Auto");
-        JRadioButton rb3 = new JRadioButton("Full-Auto");
+        cp.add(new JLabel("Select Firerate"));
 
-            fireRateGroup.add(rb1);
-            fireRateGroup.add(rb2);
-            fireRateGroup.add(rb3);
+            manualSelector = new JRadioButton("Manual Fire");
+            manualSelector.addActionListener(this);
 
-            rb1.addItemListener(this);
-            rb2.addItemListener(this);
-            rb3.addItemListener(this);
+            semiautoSelector = new JRadioButton("Semi-Auto Fire");
+            semiautoSelector.addActionListener(this);
 
+            fullautoSelector = new JRadioButton("Full-Auto Fire");
+            fullautoSelector.addActionListener(this);
 
         //the fire button
         fireButton = new JButton("Fire");
