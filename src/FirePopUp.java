@@ -13,40 +13,29 @@ import java.awt.event.ItemListener;
 
 //hier is de start van de class, waarin we alles callen
 public class FirePopUp extends JFrame {
-    private JTextField ammoField;
-    private JButton fireButton;
-    private JRadioButton manualSelector;
-    private JRadioButton semiautoSelector;
-    private JRadioButton fullautoSelector;
     private int Ammo = 20;
 
     //hier is de werkelijke constructor van de GUI
-    public FirePopUp() extends JFrame implements ItemListener implements ActionListener {
+    public FirePopUp() {
 
-        Container cp = getContentPane();
-        cp.setLayout(new FlowLayout());
+        //frame attributes, visibilty, title, etc
+        JFrame guiFrame = new JFrame();
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        guiFrame.setTitle("");
+        guiFrame.setSize(200, 200);
+        guiFrame.setLocationRelativeTo(null);
 
         //the text field
-        cp.add(new JLabel("Ammo"));
-        ammoField = new JTextField("20", 3);
+        final JPanel ammoCounter = new JPanel();
+        ammoCounter.add(new JLabel("Ammo"));
+        JTextField ammoField = new JTextField("20", 3);
         ammoField.setEditable(false);
-        cp.add(ammoField);
-
-        //the firerate selector
-        cp.add(new JLabel("Select Firerate"));
-
-            manualSelector = new JRadioButton("Manual Fire");
-            manualSelector.addActionListener(this);
-
-            semiautoSelector = new JRadioButton("Semi-Auto Fire");
-            semiautoSelector.addActionListener(this);
-
-            fullautoSelector = new JRadioButton("Full-Auto Fire");
-            fullautoSelector.addActionListener(this);
+        ammoCounter.add(ammoField);
 
         //the fire button
-        fireButton = new JButton("Fire");
-        cp.add(fireButton);
+        JButton fireButton = new JButton("Fire");
+        ammoCounter.add(fireButton);
 
         fireButton.addActionListener(new ActionListener() {
             @Override
@@ -56,11 +45,28 @@ public class FirePopUp extends JFrame {
             }
         });
 
-        //frame attributes, visibilty, title, etc
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Ammo Counter");
-        setSize(300, 100);
-        setVisible(true);
+        //the firerate selector
+        final JPanel fireratePanel = new JPanel();
+        JLabel firerateLabel = new JLabel("Select Fire Rate");
+        JRadioButton manualFire = new JRadioButton("Manual Fire");
+        JRadioButton semiautoFire = new JRadioButton("Semi-Auto Fire");
+        JRadioButton fullautoFire = new JRadioButton("Full-Auto Fire");
+
+        fireratePanel.add(firerateLabel);
+
+        ButtonGroup fireRatesGroup = new ButtonGroup();
+        fireRatesGroup.add(manualFire);
+        fireRatesGroup.add(semiautoFire);
+        fireRatesGroup.add(fullautoFire);
+
+        fireratePanel.add(manualFire);
+        fireratePanel.add(semiautoFire);
+        fireratePanel.add(fullautoFire);
+
+        //the layout
+        guiFrame.add(ammoCounter, BorderLayout.NORTH);
+        guiFrame.add(fireratePanel, BorderLayout.CENTER);
+        guiFrame.setVisible(true);
     }
 
     public static void main(String[] args) {
