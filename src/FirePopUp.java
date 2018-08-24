@@ -1,19 +1,19 @@
 //imports
-import java.awt.*;                      //want we gebruiken AWT als layout
-import java.awt.event.*;                //want we gebruiken AWT event handeing
-import javax.swing.*;                   //en we gebruiken Swing voor de rest
-import javax.swing.GroupLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 import javax.swing.JFrame;
-import java.awt.Container;
-import java.awt.EventQueue;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.ActionListener;
 
 //hier is de start van de class, waarin we alles callen
-public class FirePopUp extends JFrame {
+public class FirePopUp extends JFrame implements ItemListener {
     private int Ammo = 20;
+    private int fireType = 1;
+    private String typeManual;
+    private String typeSemi;
+    private String typeAuto;
 
     //hier is de werkelijke constructor van de GUI
     public FirePopUp() {
@@ -40,7 +40,7 @@ public class FirePopUp extends JFrame {
         fireButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                --Ammo;
+                Ammo = Ammo - fireType;
                 ammoField.setText(Ammo + "");
             }
         });
@@ -49,8 +49,11 @@ public class FirePopUp extends JFrame {
         final JPanel fireratePanel = new JPanel();
         JLabel firerateLabel = new JLabel("Select Fire Rate");
         JRadioButton manualFire = new JRadioButton("Manual Fire");
+            manualFire.setActionCommand(typeManual);
         JRadioButton semiautoFire = new JRadioButton("Semi-Auto Fire");
+            semiautoFire.setActionCommand(typeSemi);
         JRadioButton fullautoFire = new JRadioButton("Full-Auto Fire");
+            fullautoFire.setActionCommand(typeAuto);
 
         fireratePanel.add(firerateLabel);
 
@@ -62,6 +65,21 @@ public class FirePopUp extends JFrame {
         fireratePanel.add(manualFire);
         fireratePanel.add(semiautoFire);
         fireratePanel.add(fullautoFire);
+
+        manualFire.addItemListener(this);
+        semiautoFire.addItemListener(this);
+        fullautoFire.addItemListener(this);
+
+        for ( ; ; ) {
+            switch (fireRatesGroup.getButtonCount()) {
+                case 1:
+                    fireType = 1;
+                case 2:
+                    fireType = 3;
+                case 3:
+                    fireType = 6;
+            }
+        }
 
         //the layout
         guiFrame.add(ammoCounter, BorderLayout.NORTH);
