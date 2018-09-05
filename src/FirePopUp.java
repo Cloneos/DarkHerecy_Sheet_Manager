@@ -8,7 +8,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.ActionListener;
 
 //hier is de start van de class, waarin we alles callen
-public class FirePopUp extends JFrame implements ItemListener {
+public abstract class FirePopUp extends JFrame implements ItemListener {
     private int Ammo = 20;
     private int fireType = 1;
     private String typeManual;
@@ -17,7 +17,6 @@ public class FirePopUp extends JFrame implements ItemListener {
 
     //hier is de werkelijke constructor van de GUI
     public FirePopUp() {
-
         //frame attributes, visibilty, title, etc
         JFrame guiFrame = new JFrame();
 
@@ -70,6 +69,11 @@ public class FirePopUp extends JFrame implements ItemListener {
         semiautoFire.addItemListener(this);
         fullautoFire.addItemListener(this);
 
+        //the layout
+        guiFrame.add(ammoCounter, BorderLayout.NORTH);
+        guiFrame.add(fireratePanel, BorderLayout.CENTER);
+        guiFrame.setVisible(true);
+
         for ( ; ; ) {
             switch (fireRatesGroup.getButtonCount()) {
                 case 1:
@@ -80,18 +84,18 @@ public class FirePopUp extends JFrame implements ItemListener {
                     fireType = 6;
             }
         }
-
-        //the layout
-        guiFrame.add(ammoCounter, BorderLayout.NORTH);
-        guiFrame.add(fireratePanel, BorderLayout.CENTER);
-        guiFrame.setVisible(true);
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new FirePopUp();
+                new FirePopUp() {
+                    @Override
+                    public void itemStateChanged(ItemEvent e) {
+
+                    }
+                };
             }
         });
     }
