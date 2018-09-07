@@ -8,12 +8,12 @@ import java.awt.event.ItemListener;
 import java.awt.event.ActionListener;
 
 //hier is de start van de class, waarin we alles callen
-public abstract class FirePopUp extends JFrame implements ItemListener {
-    private int Ammo = 20;
-    private int fireType = 1;
-    private String typeManual;
-    private String typeSemi;
-    private String typeAuto;
+public class FirePopUp extends JFrame implements ItemListener {
+    int Ammo = 20;
+    int fireType = 1;
+    String typeManual;
+    String typeSemi;
+    String typeAuto;
 
     //hier is de werkelijke constructor van de GUI
     public FirePopUp() {
@@ -36,23 +36,17 @@ public abstract class FirePopUp extends JFrame implements ItemListener {
         JButton fireButton = new JButton("Fire");
         ammoCounter.add(fireButton);
 
-        fireButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                Ammo = Ammo - fireType;
-                ammoField.setText(Ammo + "");
-            }
-        });
+        fireButton.addActionListener(new ActionListener());
 
         //the firerate selector
         final JPanel fireratePanel = new JPanel();
         JLabel firerateLabel = new JLabel("Select Fire Rate");
         JRadioButton manualFire = new JRadioButton("Manual Fire");
-            manualFire.setActionCommand(typeManual);
+        manualFire.setActionCommand(1);
         JRadioButton semiautoFire = new JRadioButton("Semi-Auto Fire");
-            semiautoFire.setActionCommand(typeSemi);
+        semiautoFire.setActionCommand(3);
         JRadioButton fullautoFire = new JRadioButton("Full-Auto Fire");
-            fullautoFire.setActionCommand(typeAuto);
+        fullautoFire.setActionCommand(6);
 
         fireratePanel.add(firerateLabel);
 
@@ -74,29 +68,18 @@ public abstract class FirePopUp extends JFrame implements ItemListener {
         guiFrame.add(fireratePanel, BorderLayout.CENTER);
         guiFrame.setVisible(true);
 
-        for ( ; ; ) {
-            switch (fireRatesGroup.getButtonCount()) {
-                case 1:
-                    fireType = 1;
-                case 2:
-                    fireType = 3;
-                case 3:
-                    fireType = 6;
-            }
+        public void fireGun() {
+            Ammo = Ammo - evt.getActionCommand();
         }
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable());
+        new FirePopUp() {
             @Override
-            public void run() {
-                new FirePopUp() {
-                    @Override
-                    public void itemStateChanged(ItemEvent e) {
+            public void actionPerformed(ItemEvent e) {
 
-                    }
-                };
             }
-        });
+        };
     }
 }
